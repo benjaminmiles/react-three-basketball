@@ -1,7 +1,7 @@
 {
   "name": "react-three-basketball",
   "version": "1.0.0",
-  "description": "Physics based basketball game using react-three-fiber and cannon.",
+  "description": "An experimental basketball game using React Three Fiber and Cannon physics.",
   "keywords": [
     "three",
     "react",
@@ -31,6 +31,7 @@
   },
   "scripts": {
     "dev": "vite --host",
+    "sandbox": "APP_ENV=sandbox vite",
     "build": "vite build",
     "preview": "vite preview"
   },
