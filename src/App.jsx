@@ -1,7 +1,7 @@
 import React, { Suspense, useCallback, useState, useEffect, useRef } from "react";
 import uuid from "short-uuid";
 import create from "zustand";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Box, Plane, Sphere, Torus, Cylinder, PerspectiveCamera, OrthographicCamera, Environment, Stats } from "@react-three/drei";
 import { Physics, Debug, useBox, usePlane, useSphere, useCylinder, useCompoundBody } from "@react-three/cannon";
 import { Vector3 } from "three";
@@ -17,10 +17,16 @@ const COLORS = {
   ball: "#f55951",
 };
 
+const ROUND_DURATION = 10;
+
 const useStore = create(set => ({
   score: 0,
   addPoint: () => set(state => ({ score: state.score + 1 })),
   resetScore: () => set({ score: 0 }),
+  timeLeft: ROUND_DURATION,
+  setTimeLeft: seconds => set(() => ({ timeLeft: seconds })),
+  gameOver: false,
+  setGameOver: over => set(() => ({ gameOver: over })),
 }));
 
 const Ground = ({ ...props }) => {
@@ -184,6 +190,15 @@ const Court = () => {
 
 const Scene = ({ ortho }) => {
   const backgroundColor = COLORS.background;
+  const [setTimeLeft, setGameOver, gameOver] = useStore(state => [state.setTimeLeft, state.setGameOver, state.gameOver]);
+
+  useFrame(({ clock }) => {
+    if (!gameOver && clock.elapsedTime > ROUND_DURATION + 1) {
+      setGameOver(true);
+    } else if (!gameOver) {
+      setTimeLeft(ROUND_DURATION - parseInt(clock.elapsedTime));
+    }
+  });
 
   return (
     <>
@@ -218,7 +233,7 @@ const Scene = ({ ortho }) => {
 };
 
 const App = () => {
-  const score = useStore(state => state.score);
+  const [score, timeLeft] = useStore(state => [state.score, state.timeLeft]);
   const [ortho, setOrtho] = useState(false);
   const orthographicRef = useRef();
   const perspectiveRef = useRef();
@@ -249,7 +264,10 @@ const App = () => {
         <OrthographicCamera ref={orthographicRef} {...orthographicSettings} makeDefault={ortho} />
         <Scene ortho={ortho} />
       </Canvas>
-      <div className='score'>{score}</div>
+      <div className='score'>
+        {score}
+        {/* {timeLeft} */}
+      </div>
       <button className='button' onClick={() => setOrtho(!ortho)}>
         Switch Cams
       </button>

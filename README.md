@@ -10,7 +10,7 @@ _An experimental basketball game using React Three Fiber and Cannon physics._
 - [Three.js](https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene): 3D Engine
 - [Vite](https://vitejs.dev/guide/): Static Web Server
 
-# Installation
+### Installation
 
 ```
 npm install
