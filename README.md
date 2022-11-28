@@ -2,6 +2,12 @@
 
 _An experimental basketball game using React Three Fiber and Cannon physics._
 
+![Preview](/public/preview.gif)
+
+### Instructions:
+
+Tap or click a ball to shoot.
+
 ### Resources:
 
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/): Three.js Renderer
