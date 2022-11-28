@@ -4,6 +4,8 @@ _An experimental basketball game using React Three Fiber and Cannon physics._
 
 ![Preview](/public/preview.gif)
 
+[Live Demo](https://codesandbox.io/p/github/benjaminmiles/react-three-basketball/main)
+
 ### Instructions:
 
 Tap or click a ball to shoot.
